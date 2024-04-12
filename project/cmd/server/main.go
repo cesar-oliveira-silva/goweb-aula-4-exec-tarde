@@ -62,6 +62,7 @@ func main() {
 	pr.Use(TokenMiddleware)
 	pr.POST("/", userHandler.Store())
 	pr.GET("/", userHandler.GetAll())
+	pr.GET("/:id", userHandler.GetId())
 	pr.PUT("/:id", userHandler.Update())
 	pr.PATCH("/:id", userHandler.UpdateName())
 	pr.DELETE("/:id", userHandler.Delete())

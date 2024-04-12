@@ -77,6 +77,42 @@ func (c *ServiceHandler) GetAll() gin.HandlerFunc {
 	}
 }
 
+// ListAnUser godoc
+// @Summmary List an User by Id
+// @Tags users
+// @Description get user by id
+// @Accept json
+// @Produce json
+// @Param token header string true "token"
+// @Param id path int true "User ID"
+// @Success 200 {object} web.Response
+// @Router /usuarios/:id [get]
+func (c *ServiceHandler) GetId() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+
+		id, err := strconv.ParseUint(ctx.Param("id"), 10, 0)
+
+		if err != nil {
+			//ctx.JSON(http.StatusBadRequest, gin.H{"error": "invalid ID"})
+			ctx.JSON(http.StatusBadRequest, web.NewResponse(http.StatusBadRequest, nil, "Erro: Id invalido"))
+			return
+		}
+
+		p, err := c.service.GetId(id)
+		if err != nil {
+			// ctx.JSON(http.StatusBadRequest, gin.H{
+			// 	"error": err.Error(),
+			// })
+			ctx.JSON(http.StatusBadRequest, web.NewResponse(http.StatusBadRequest, nil, "Erro ao recuperar usuario"))
+			return
+		}
+
+		//ctx.JSON(http.StatusOK, p)
+		ctx.JSON(http.StatusOK, web.NewResponse(http.StatusOK, p, ""))
+
+	}
+}
+
 // StoreUsers godoc
 // @Summmary Store users
 // @Tags users
@@ -202,7 +238,7 @@ func (c *ServiceHandler) Update() gin.HandlerFunc {
 // @Param token header string true "token"
 // @Param usuario body UpdateRequestDto true "Name to update"
 // @Success 200 {object} web.Response
-// @Router /usuarios [PATCH]
+// @Router /usuarios/:id [PATCH]
 func (c *ServiceHandler) UpdateName() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 

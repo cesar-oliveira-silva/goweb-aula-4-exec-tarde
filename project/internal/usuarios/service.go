@@ -6,6 +6,7 @@ type Service interface {
 	Update(Id uint64, name string, sobrenome string, email string, idade int, altura int, ativo bool, datacriacao string) (Usuario, error)
 	UpdateName(id uint64, name string) (Usuario, error)
 	Delete(id uint64) error
+	GetId(id uint64) (Usuario, error)
 }
 
 type service struct {
@@ -47,4 +48,7 @@ func (s *service) UpdateName(id uint64, name string) (Usuario, error) {
 
 func (s *service) Delete(id uint64) error {
 	return s.repository.Delete(id)
+}
+func (s *service) GetId(id uint64) (Usuario, error) {
+	return s.repository.GetId(id)
 }

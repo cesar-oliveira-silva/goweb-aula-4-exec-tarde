@@ -9,6 +9,7 @@ type Repository interface {
 	Update(Id uint64, name string, sobrenome string, email string, idade int, altura int, ativo bool, datacriacao string) (Usuario, error)
 	UpdateName(id uint64, name string) (Usuario, error)
 	Delete(id uint64) error
+	GetId(id uint64) (Usuario, error)
 }
 
 func NewRepository(db store.Store) Repository {

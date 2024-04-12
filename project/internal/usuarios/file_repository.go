@@ -22,6 +22,20 @@ func (r *FileRepository) GetAll() ([]Usuario, error) {
 	return ps, nil
 }
 
+func (r *FileRepository) GetId(id uint64) (Usuario, error) {
+	var usuarios []Usuario
+	// primeiro lemos o arquivo
+	r.db.Read(&usuarios)
+
+	for i := range usuarios {
+		if usuarios[i].Id == id {
+			return usuarios[i], nil
+		}
+	}
+
+	return Usuario{}, fmt.Errorf("Usuario %d nao encontrado", id)
+}
+
 func (r *FileRepository) Store(nome string, sobrenome string, email string, idade int, altura int, ativo bool, datacriacao string) (Usuario, error) {
 	p := Usuario{
 		Id:          lastID,
