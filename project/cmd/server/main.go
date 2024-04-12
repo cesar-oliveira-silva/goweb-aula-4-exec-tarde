@@ -6,11 +6,14 @@ import (
 	"os"
 
 	"github.com/cesar-oliveira-silva/goweb-aula-4-exec-tarde.git/project/cmd/server/handler"
+	"github.com/cesar-oliveira-silva/goweb-aula-4-exec-tarde.git/project/docs"
 	"github.com/cesar-oliveira-silva/goweb-aula-4-exec-tarde.git/project/internal/usuarios"
 	"github.com/cesar-oliveira-silva/goweb-aula-4-exec-tarde.git/project/pkg/store"
 	"github.com/cesar-oliveira-silva/goweb-aula-4-exec-tarde.git/project/pkg/web"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 // var dbConn *sql.DB
@@ -29,6 +32,16 @@ func TokenMiddleware(ctx *gin.Context) {
 	ctx.Next()
 }
 
+//@title MELI Bootcamp API
+//@version 1.0
+//@description API de aprendizado bootcamp Meli wave 37
+//@termsOfService https://developers.mercadolibre.com.ar/es_ar/terminos-y-condiciones
+
+//@contact.name API Support
+//contact.url https://developers.mercadolibre.com.ar/support
+
+// @licence.name Apache 2.0
+// @licence.url http://www.apache.org/licenses/LICENSE-2.0.html
 func main() {
 
 	err := godotenv.Load()
@@ -41,6 +54,10 @@ func main() {
 	userHandler := handler.NewUser(service)
 
 	server := gin.Default()
+
+	docs.SwaggerInfo.Host = os.Getenv("HOST")
+	server.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
 	pr := server.Group("/usuarios")
 	pr.Use(TokenMiddleware)
 	pr.POST("/", userHandler.Store())

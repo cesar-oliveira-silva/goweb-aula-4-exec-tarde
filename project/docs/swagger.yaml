@@ -1,0 +1,171 @@
+definitions:
+  handler.CreateRequestDto:
+    properties:
+      altura:
+        type: integer
+      ativo:
+        type: boolean
+      dataCriacao:
+        type: string
+      email:
+        type: string
+      idade:
+        type: integer
+      nome:
+        type: string
+      sobrenome:
+        type: string
+    type: object
+  handler.UpdateRequestDto:
+    properties:
+      altura:
+        type: integer
+      ativo:
+        type: boolean
+      dataCriacao:
+        type: string
+      email:
+        type: string
+      idade:
+        type: integer
+      nome:
+        type: string
+      sobrenome:
+        type: string
+    type: object
+  web.Response:
+    properties:
+      code:
+        type: string
+      data: {}
+      error:
+        type: string
+    type: object
+info:
+  contact:
+    name: API Support
+  description: API de aprendizado bootcamp Meli wave 37
+  termsOfService: https://developers.mercadolibre.com.ar/es_ar/terminos-y-condiciones
+  title: MELI Bootcamp API
+  version: "1.0"
+paths:
+  /usuarios:
+    delete:
+      consumes:
+      - application/json
+      description: Delete user
+      parameters:
+      - description: token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.Response'
+      tags:
+      - users
+    get:
+      consumes:
+      - application/json
+      description: get users
+      parameters:
+      - description: token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.Response'
+      tags:
+      - users
+    patch:
+      consumes:
+      - application/json
+      description: Update user name
+      parameters:
+      - description: token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: Name to update
+        in: body
+        name: usuario
+        required: true
+        schema:
+          $ref: '#/definitions/handler.UpdateRequestDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.Response'
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      description: store users
+      parameters:
+      - description: token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: User to store
+        in: body
+        name: usuario
+        required: true
+        schema:
+          $ref: '#/definitions/handler.CreateRequestDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.Response'
+      tags:
+      - users
+    put:
+      consumes:
+      - application/json
+      description: Update users
+      parameters:
+      - description: token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: User to store
+        in: body
+        name: usuario
+        required: true
+        schema:
+          $ref: '#/definitions/handler.UpdateRequestDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.Response'
+      tags:
+      - users
+swagger: "2.0"
